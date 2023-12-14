@@ -3,6 +3,7 @@ pragma solidity ^0.8.13;
 
 import {IAVSReservesManager} from "../interfaces/IAVSReservesManager.sol";
 import {ISafetyFactorOracle} from "../interfaces/ISafetyFactorOracle.sol";
+import {IPaymentManager} from "../interfaces/IPaymentManager.sol";
 
 import {SafeERC20} from "openzeppelin-contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "openzeppelin-contracts/token/ERC20/IERC20.sol";
@@ -10,10 +11,6 @@ import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
 import "openzeppelin-contracts/utils/math/Math.sol";
 
 import {console2} from "forge-std/Test.sol";
-
-interface IPaymentMaster {
-    function receivePayment(uint256 amount) external;
-}
 
 contract AVSReservesManager is Ownable, IAVSReservesManager {
     using SafeERC20 for IERC20;
@@ -31,7 +28,7 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
 
     IERC20 public token; // Token to be distributed
     address public protocol; // Address of the protocol
-    IPaymentMaster public paymentMaster; // Address of the Payment Master contract
+    IPaymentManager public paymentMaster; // Address of the Payment Master contract
     ISafetyFactorOracle public safetyFactorOracle; // Address of the Safety Factor Oracle contract
 
     // Initialize contract with initial values
@@ -55,7 +52,7 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
         MaxRateLimit = _MaxRateLimit;
         minEpochDuration = _epochLength;
         lastEpochUpdateTimestamp = block.timestamp;
-        paymentMaster = IPaymentMaster(_paymentMaster);
+        paymentMaster = IPaymentManager(_paymentMaster);
         token = IERC20(_token);
         safetyFactorOracle = ISafetyFactorOracle(_safetyFactorOracle);
         protocol = _protocol;

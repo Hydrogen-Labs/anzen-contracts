@@ -5,9 +5,9 @@ directory.
 
 ## Contracts
 
-| Contract                                                | Description                                                      |
-| ------------------------------------------------------- | ---------------------------------------------------------------- |
-| [`AVSReservesManager`](contracts/AVSReservesManagersol) | Coordinates payment emmissions from the AVS to the AVS operators |
+| Contract                                                          | Description                                                      |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [`AVSReservesManager`](contracts/src/core/AVSReservesManager.sol) | Coordinates payment emmissions from the AVS to the AVS operators |
 
 ## Payment Flow
 

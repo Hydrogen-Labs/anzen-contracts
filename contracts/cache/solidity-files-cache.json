@@ -1344,8 +1344,8 @@
       }
     },
     "src/core/AVSReservesManager.sol": {
-      "lastModificationDate": 1696019436175,
-      "contentHash": "bb277e0cc7d308327c0372d649282cc9",
+      "lastModificationDate": 1702559628997,
+      "contentHash": "9898baed947d28561ef68cd98e28edca",
       "sourceName": "src/core/AVSReservesManager.sol",
       "solcConfig": {
         "settings": {
@@ -1403,20 +1403,18 @@
         "lib/openzeppelin-contracts/contracts/utils/Context.sol",
         "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
         "src/interfaces/IAVSReservesManager.sol",
+        "src/interfaces/IPaymentManager.sol",
         "src/interfaces/ISafetyFactorOracle.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
         "AVSReservesManager": {
           "0.8.21+commit.d9974bed.Darwin.appleclang": "AVSReservesManager.sol/AVSReservesManager.json"
-        },
-        "IPaymentMaster": {
-          "0.8.21+commit.d9974bed.Darwin.appleclang": "AVSReservesManager.sol/IPaymentMaster.json"
         }
       }
     },
     "src/core/AVSReservesManagerFactory.sol": {
-      "lastModificationDate": 1695936419688,
+      "lastModificationDate": 1702551181348,
       "contentHash": "aaa83954eee243a43419759c48e0a0c3",
       "sourceName": "src/core/AVSReservesManagerFactory.sol",
       "solcConfig": {
@@ -1476,6 +1474,7 @@
         "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
         "src/core/AVSReservesManager.sol",
         "src/interfaces/IAVSReservesManager.sol",
+        "src/interfaces/IPaymentManager.sol",
         "src/interfaces/ISafetyFactorOracle.sol"
       ],
       "versionRequirement": "^0.8.13",
@@ -1570,6 +1569,47 @@
         }
       }
     },
+    "src/interfaces/IPaymentManager.sol": {
+      "lastModificationDate": 1702559608886,
+      "contentHash": "3421978931b7d6cdac9a46d3204cdace",
+      "sourceName": "src/interfaces/IPaymentManager.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IPaymentManager": {
+          "0.8.21+commit.d9974bed.Darwin.appleclang": "IPaymentManager.sol/IPaymentManager.json"
+        }
+      }
+    },
     "src/interfaces/ISafetyFactorOracle.sol": {
       "lastModificationDate": 1695848904688,
       "contentHash": "16e074aa3fcd46f9790efa05bc8a1413",
@@ -1653,7 +1693,7 @@
       }
     },
     "test/core/AVSReservesManager.t.sol": {
-      "lastModificationDate": 1695932545392,
+      "lastModificationDate": 1702551181351,
       "contentHash": "1346bf94acaccc006ffa5eb3a93265dd",
       "sourceName": "test/core/AVSReservesManager.t.sol",
       "solcConfig": {
@@ -1717,6 +1757,7 @@
         "src/core/AVSReservesManager.sol",
         "src/core/SafetyFactorOracle.sol",
         "src/interfaces/IAVSReservesManager.sol",
+        "src/interfaces/IPaymentManager.sol",
         "src/interfaces/ISafetyFactorOracle.sol",
         "src/structs/SafetyFactorStructs.sol",
         "test/mocks/MockToken.sol"
@@ -1788,6 +1829,90 @@
       "artifacts": {
         "SafetyFactorOracleTest": {
           "0.8.21+commit.d9974bed.Darwin.appleclang": "SafetyFactorOracle.t.sol/SafetyFactorOracleTest.json"
+        }
+      }
+    },
+    "test/mocks/MockAVS.sol": {
+      "lastModificationDate": 1702559732197,
+      "contentHash": "d41d8cd98f00b204e9800998ecf8427e",
+      "sourceName": "test/mocks/MockAVS.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": null,
+      "artifacts": {
+        "MockAVS": {
+          "0.8.21+commit.d9974bed.Darwin.appleclang": "MockAVS.sol/MockAVS.json"
+        }
+      }
+    },
+    "test/mocks/MockPaymentManager.sol": {
+      "lastModificationDate": 1702568872422,
+      "contentHash": "9fd1ca20086d873f71efba0de971a6a2",
+      "sourceName": "test/mocks/MockPaymentManager.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "src/interfaces/IPaymentManager.sol"
+      ],
+      "versionRequirement": "^0.8.19",
+      "artifacts": {
+        "PaymentManager": {
+          "0.8.21+commit.d9974bed.Darwin.appleclang": "MockPaymentManager.sol/PaymentManager.json"
         }
       }
     },
