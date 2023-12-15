@@ -9,7 +9,7 @@ import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
 import {SafeMath} from "../../dependencies/SafeMath.sol";
 import "openzeppelin-contracts/utils/math/Math.sol";
 
-contract PaymentManager is IPaymentManager {
+contract PaymentManager is IPaymentManager, Ownable {
     // Waiting for eigenlayer implementation
     // Various ways to implement this:
     // 1. Merkle trees
@@ -39,11 +39,11 @@ contract PaymentManager is IPaymentManager {
 
     // --- Functions ---
 
-    function setAddresses(
+    constructor(
         address _restakeTokenAddress,
         address _govTokenAddress,
         address _avsReservesManagerAddress
-    ) external {
+    ) Ownable(address(0)) {
         restakeToken = ERC20(_restakeTokenAddress);
         govToken = ERC20(_govTokenAddress);
         avsReservesManagerAddress = _avsReservesManagerAddress;

@@ -2,8 +2,6 @@
 pragma solidity ^0.8.0;
 
 interface ISafetyFactorOracle {
-    // Structs
-
     // Events
     event SFUpdated(int256 newSF, address protocol);
     event SFProposed(int256 newSF, address protocol);

@@ -5,17 +5,24 @@ directory.
 
 ## Contracts
 
-| Contract                                                          | Description                                                      |
-| ----------------------------------------------------------------- | ---------------------------------------------------------------- |
-| [`AVSReservesManager`](contracts/src/core/AVSReservesManager.sol) | Coordinates payment emmissions from the AVS to the AVS operators |
+| Contract                                                                      | Description                                                      |
+| ----------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [AVSReservesManagerFactory](contracts/src/core/AVSReservesManagerFactory.sol) | Factory for deploying AVSReservesManager contracts               |
+| [AVSReservesManager](contracts/src/core/AVSReservesManager.sol)               | Coordinates payment emmissions from the AVS to the AVS operators |
+| [SafetyFactorOracle](contracts/src/core/SafetyFactorOracle.sol)               | Provides a safety factor feed for the given AVS                  |
+| [MockPaymentManager](contracts/test/mocks/MockPaymentManager.sol)             | Mock eigenlayer payment manager for testing purposes             |
+| [MockAVS](contracts/test/mocks/MockAVS.sol)                                   | Mock AVS for testing purposes                                    |
 
 ## Payment Flow
 
 ```mermaid
 graph TD;
 AVS-->|Emmisions Schedule| Reserves;
-Reserves-->|Eigenlayer Payments Manager| Operators
+Reserves-->|Payout| EigenlayerPaymentsManager;
+EigenlayerPaymentsManager-->|Claimable Tokens|Operators;
+
 Anzen-->|Consensus adjustment on rate of payments|Reserves
+
 ```
 
 ## Usage
