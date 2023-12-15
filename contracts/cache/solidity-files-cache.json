@@ -11,6 +11,47 @@
     ]
   },
   "files": {
+    "dependencies/SafeMath.sol": {
+      "lastModificationDate": 1702647938353,
+      "contentHash": "f912fb2854fa0f9f4976c7cce2d1e645",
+      "sourceName": "dependencies/SafeMath.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.19",
+      "artifacts": {
+        "SafeMath": {
+          "0.8.21+commit.d9974bed.Darwin.appleclang": "SafeMath.sol/SafeMath.json"
+        }
+      }
+    },
     "lib/forge-std/lib/ds-test/src/test.sol": {
       "lastModificationDate": 1695051107011,
       "contentHash": "9febff9d09f18af5306669dc276c4c43",
@@ -1344,8 +1385,8 @@
       }
     },
     "src/core/AVSReservesManager.sol": {
-      "lastModificationDate": 1702559628997,
-      "contentHash": "9898baed947d28561ef68cd98e28edca",
+      "lastModificationDate": 1702646658173,
+      "contentHash": "0da9d50e36e18825d6926958f8fc4b5e",
       "sourceName": "src/core/AVSReservesManager.sol",
       "solcConfig": {
         "settings": {
@@ -1570,8 +1611,8 @@
       }
     },
     "src/interfaces/IPaymentManager.sol": {
-      "lastModificationDate": 1702559608886,
-      "contentHash": "3421978931b7d6cdac9a46d3204cdace",
+      "lastModificationDate": 1702647480909,
+      "contentHash": "1d3ba7ba0e4bb9b6e6e10629692f7c48",
       "sourceName": "src/interfaces/IPaymentManager.sol",
       "solcConfig": {
         "settings": {
@@ -1693,8 +1734,8 @@
       }
     },
     "test/core/AVSReservesManager.t.sol": {
-      "lastModificationDate": 1702551181351,
-      "contentHash": "1346bf94acaccc006ffa5eb3a93265dd",
+      "lastModificationDate": 1702642252004,
+      "contentHash": "002524f3f3550edc5f325c0b42ecd0c5",
       "sourceName": "test/core/AVSReservesManager.t.sol",
       "solcConfig": {
         "settings": {
@@ -1833,8 +1874,8 @@
       }
     },
     "test/mocks/MockAVS.sol": {
-      "lastModificationDate": 1702559732197,
-      "contentHash": "d41d8cd98f00b204e9800998ecf8427e",
+      "lastModificationDate": 1702569391762,
+      "contentHash": "3ae712ce95fc340c638cbb5038477be6",
       "sourceName": "test/mocks/MockAVS.sol",
       "solcConfig": {
         "settings": {
@@ -1865,8 +1906,15 @@
           "libraries": {}
         }
       },
-      "imports": [],
-      "versionRequirement": null,
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/interfaces/draft-IERC6093.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "src/interfaces/IAVSReservesManager.sol"
+      ],
+      "versionRequirement": "^0.8.19",
       "artifacts": {
         "MockAVS": {
           "0.8.21+commit.d9974bed.Darwin.appleclang": "MockAVS.sol/MockAVS.json"
@@ -1874,8 +1922,8 @@
       }
     },
     "test/mocks/MockPaymentManager.sol": {
-      "lastModificationDate": 1702568872422,
-      "contentHash": "9fd1ca20086d873f71efba0de971a6a2",
+      "lastModificationDate": 1702648146075,
+      "contentHash": "6f4e82c3bc5c7728131334c10a61135a",
       "sourceName": "test/mocks/MockPaymentManager.sol",
       "solcConfig": {
         "settings": {
@@ -1907,6 +1955,14 @@
         }
       },
       "imports": [
+        "dependencies/SafeMath.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/interfaces/draft-IERC6093.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
         "src/interfaces/IPaymentManager.sol"
       ],
       "versionRequirement": "^0.8.19",

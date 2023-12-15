@@ -106,7 +106,9 @@ contract AVSReservesManagerTest is Test {
         assertEq(avsReservesManager.tokensPerSecond(), (95 * 120) / 100);
 
         claimableTokens = avsReservesManager.claimableTokens();
-        assertEq(claimableTokens, 2 days * 100 + (2 days * 95));
+        uint256 fee = avsReservesManager.claimableFees();
+
+        assertEq(claimableTokens, 2 days * 100 + (2 days * 95) - fee);
     }
 
     function testOverrideTokensPerSecond() public {
@@ -127,13 +129,13 @@ contract AVSReservesManagerTest is Test {
     function testUpdateParams() public {
         vm.warp(1 days);
         avsReservesManager.updateSafetyFactorParams(
-            -1,
+            1,
             10 ** 9,
             200_000_000,
             950_000_000
         );
 
-        assertEq(avsReservesManager.SF_lower_bound(), -1);
+        assertEq(avsReservesManager.SF_lower_bound(), 1);
         assertEq(avsReservesManager.SF_upper_bound(), 10 ** 9);
         assertEq(avsReservesManager.ReductionFactor(), 200_000_000);
         assertEq(avsReservesManager.MaxRateLimit(), 950_000_000);

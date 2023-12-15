@@ -21,13 +21,19 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
     uint256 public MaxRateLimit; // Maximum rate at which tokenFlow can be increased
 
     uint256 public claimableTokens; // Amount of tokens that can be transferred to the Payment Master contract
+    uint256 public claimableFees; // Amount of fees that can be transferred to Anzen
     uint256 public tokensPerSecond; // Current flow epoch token distribution
+    uint256 public prevTokensPerSecond; // Previous flow epoch token distribution
     uint256 public minEpochDuration; // Length of each epoch in seconds
     uint256 public lastEpochUpdateTimestamp; // Last time the epoch was updated
     uint256 public PRECISION = 10 ** 9; // Precision for tokenFlow
 
+    uint256 public constant MAX_PERFORMANCE_FEE_BPS = 500; // 5%
+    uint256 public constant BPS_DENOMINATOR = 10_000; // 10,000
+
     IERC20 public token; // Token to be distributed
     address public protocol; // Address of the protocol
+    address public anzen; // Address of the Anzen contract
     IPaymentManager public paymentMaster; // Address of the Payment Master contract
     ISafetyFactorOracle public safetyFactorOracle; // Address of the Safety Factor Oracle contract
 
@@ -113,6 +119,16 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
         uint256 _ReductionFactor,
         uint256 _MaxRateLimit
     ) external onlyOwner {
+        require(
+            _SF_desired_lower < _SF_desired_upper,
+            "Lower bound must be less than upper bound"
+        );
+        require(
+            _ReductionFactor < PRECISION,
+            "Reduction factor must be less than 1"
+        );
+        require(_SF_desired_lower > 0, "Lower bound must be greater than 0");
+        require(_SF_desired_upper > 0, "Upper bound must be greater than 0");
         SF_lower_bound = _SF_desired_lower;
         SF_upper_bound = _SF_desired_upper;
         ReductionFactor = _ReductionFactor;
@@ -123,7 +139,7 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
     function _adjustEpochFlow() private {
         // check how many epochLengths have passed since lastEpochUpdateTime and update epoch accordingly
         int256 _SF = safetyFactorOracle.getSafetyFactor(protocol);
-
+        prevTokensPerSecond = tokensPerSecond;
         if (_SF > SF_upper_bound) {
             // Case 2: Excessive Safety Factor
             tokensPerSecond = (tokensPerSecond * ReductionFactor) / PRECISION;
@@ -134,11 +150,19 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
     }
 
     function _adjustClaimableTokens() private {
-        // check how many tokens are available for transfer since last update
-        uint256 _tokensGained = (block.timestamp - lastEpochUpdateTimestamp) *
-            tokensPerSecond;
+        uint256 elapsedTime = block.timestamp - lastEpochUpdateTimestamp;
+        uint256 _fee = 0;
+
+        if (prevTokensPerSecond > tokensPerSecond) {
+            uint256 _tokensSaved = elapsedTime *
+                (prevTokensPerSecond - tokensPerSecond);
+            _fee = (_tokensSaved * MAX_PERFORMANCE_FEE_BPS) / BPS_DENOMINATOR;
+        }
+
+        uint256 _tokensGained = (elapsedTime * tokensPerSecond) - _fee;
 
         claimableTokens += _tokensGained;
+        claimableFees += _fee;
         lastEpochUpdateTimestamp = block.timestamp;
     }
 }
