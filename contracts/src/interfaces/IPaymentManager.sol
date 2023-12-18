@@ -7,8 +7,8 @@ interface IPaymentManager {
 
     function unstake(uint256 amount) external;
 
-    function getPendingGOVGain(address _user) external view returns (uint);
+    function getPendingGOVGain(address user) external view returns (uint);
 
     // AVSReservesManager functions
-    function increaseF_GOV(uint _GOVFee) external;
+    function increaseF_GOV(uint amount) external;
 }

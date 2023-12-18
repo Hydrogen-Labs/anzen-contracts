@@ -21,7 +21,7 @@ AVS-->|Emmisions Schedule| Reserves;
 Reserves-->|Payout| EigenlayerPaymentsManager;
 EigenlayerPaymentsManager-->|Claimable Tokens|Operators;
 
-Anzen-->|Consensus adjustment on rate of payments|Reserves
+Anzen-.->|Consensus adjustment on rate of payments|Reserves
 
 ```
 

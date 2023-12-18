@@ -899,6 +899,93 @@
         }
       }
     },
+    "lib/openzeppelin-contracts/contracts/access/AccessControl.sol": {
+      "lastModificationDate": 1702551181086,
+      "contentHash": "a2fa34cfb136a0cdead06767984c520d",
+      "sourceName": "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol"
+      ],
+      "versionRequirement": "^0.8.20",
+      "artifacts": {
+        "AccessControl": {
+          "0.8.21+commit.d9974bed.Darwin.appleclang": "AccessControl.sol/AccessControl.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol": {
+      "lastModificationDate": 1702551181086,
+      "contentHash": "f03782335925c62afad2475368b554dd",
+      "sourceName": "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.20",
+      "artifacts": {
+        "IAccessControl": {
+          "0.8.21+commit.d9974bed.Darwin.appleclang": "IAccessControl.sol/IAccessControl.json"
+        }
+      }
+    },
     "lib/openzeppelin-contracts/contracts/access/Ownable.sol": {
       "lastModificationDate": 1695053833714,
       "contentHash": "eb27e1beb31606e2344c6b96ba476d16",
@@ -1287,6 +1374,90 @@
         }
       }
     },
+    "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol": {
+      "lastModificationDate": 1702551181144,
+      "contentHash": "58383deda501d7fb5d15ba143f2b80b3",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol"
+      ],
+      "versionRequirement": "^0.8.20",
+      "artifacts": {
+        "ERC165": {
+          "0.8.21+commit.d9974bed.Darwin.appleclang": "ERC165.sol/ERC165.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol": {
+      "lastModificationDate": 1702551181145,
+      "contentHash": "5a21a24ec719b683e7faf6eae0db9181",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.20",
+      "artifacts": {
+        "IERC165": {
+          "0.8.21+commit.d9974bed.Darwin.appleclang": "IERC165.sol/IERC165.json"
+        }
+      }
+    },
     "lib/openzeppelin-contracts/contracts/utils/math/Math.sol": {
       "lastModificationDate": 1695053833728,
       "contentHash": "5eb91eea978bcb527346c11facbfadfb",
@@ -1385,8 +1556,8 @@
       }
     },
     "src/core/AVSReservesManager.sol": {
-      "lastModificationDate": 1702646658173,
-      "contentHash": "0da9d50e36e18825d6926958f8fc4b5e",
+      "lastModificationDate": 1702895686231,
+      "contentHash": "55b5b538d1d200bd9be9b42f0912a667",
       "sourceName": "src/core/AVSReservesManager.sol",
       "solcConfig": {
         "settings": {
@@ -1436,12 +1607,15 @@
         "lib/forge-std/src/console2.sol",
         "lib/forge-std/src/interfaces/IMulticall3.sol",
         "lib/forge-std/src/safeconsole.sol",
-        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Permit.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
         "lib/openzeppelin-contracts/contracts/utils/Address.sol",
         "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
         "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
         "src/interfaces/IAVSReservesManager.sol",
         "src/interfaces/IPaymentManager.sol",
@@ -1506,12 +1680,16 @@
         "lib/forge-std/src/console2.sol",
         "lib/forge-std/src/interfaces/IMulticall3.sol",
         "lib/forge-std/src/safeconsole.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
         "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Permit.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
         "lib/openzeppelin-contracts/contracts/utils/Address.sol",
         "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
         "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
         "src/core/AVSReservesManager.sol",
         "src/interfaces/IAVSReservesManager.sol",
@@ -1526,7 +1704,7 @@
       }
     },
     "src/core/SafetyFactorOracle.sol": {
-      "lastModificationDate": 1695848906588,
+      "lastModificationDate": 1702551181349,
       "contentHash": "f620c6044e90cd247154ce7511f8b870",
       "sourceName": "src/core/SafetyFactorOracle.sol",
       "solcConfig": {
@@ -1611,8 +1789,8 @@
       }
     },
     "src/interfaces/IPaymentManager.sol": {
-      "lastModificationDate": 1702647480909,
-      "contentHash": "1d3ba7ba0e4bb9b6e6e10629692f7c48",
+      "lastModificationDate": 1702654699706,
+      "contentHash": "61fbdbfad43e1de0cbd0e37326477058",
       "sourceName": "src/interfaces/IPaymentManager.sol",
       "solcConfig": {
         "settings": {
@@ -1652,8 +1830,8 @@
       }
     },
     "src/interfaces/ISafetyFactorOracle.sol": {
-      "lastModificationDate": 1695848904688,
-      "contentHash": "16e074aa3fcd46f9790efa05bc8a1413",
+      "lastModificationDate": 1702655374111,
+      "contentHash": "a2032fe5383a1f52e049a56c331e3b98",
       "sourceName": "src/interfaces/ISafetyFactorOracle.sol",
       "solcConfig": {
         "settings": {
@@ -1785,7 +1963,8 @@
         "lib/forge-std/src/console2.sol",
         "lib/forge-std/src/interfaces/IMulticall3.sol",
         "lib/forge-std/src/safeconsole.sol",
-        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
         "lib/openzeppelin-contracts/contracts/interfaces/draft-IERC6093.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
@@ -1794,6 +1973,8 @@
         "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
         "lib/openzeppelin-contracts/contracts/utils/Address.sol",
         "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
         "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
         "src/core/AVSReservesManager.sol",
         "src/core/SafetyFactorOracle.sol",
@@ -1810,8 +1991,91 @@
         }
       }
     },
+    "test/core/MockPaymentManager.t.sol": {
+      "lastModificationDate": 1702908093806,
+      "contentHash": "d3f10fa4df2cb1b3feb82e49d19011fc",
+      "sourceName": "test/core/MockPaymentManager.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "dependencies/SafeMath.sol",
+        "lib/forge-std/lib/ds-test/src/test.sol",
+        "lib/forge-std/src/Base.sol",
+        "lib/forge-std/src/StdAssertions.sol",
+        "lib/forge-std/src/StdChains.sol",
+        "lib/forge-std/src/StdCheats.sol",
+        "lib/forge-std/src/StdError.sol",
+        "lib/forge-std/src/StdInvariant.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/StdMath.sol",
+        "lib/forge-std/src/StdStorage.sol",
+        "lib/forge-std/src/StdStyle.sol",
+        "lib/forge-std/src/StdUtils.sol",
+        "lib/forge-std/src/Test.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol",
+        "lib/forge-std/src/interfaces/IMulticall3.sol",
+        "lib/forge-std/src/safeconsole.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/interfaces/draft-IERC6093.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
+        "src/core/AVSReservesManager.sol",
+        "src/core/SafetyFactorOracle.sol",
+        "src/interfaces/IAVSReservesManager.sol",
+        "src/interfaces/IPaymentManager.sol",
+        "src/interfaces/ISafetyFactorOracle.sol",
+        "src/structs/SafetyFactorStructs.sol",
+        "test/mocks/MockPaymentManager.sol",
+        "test/mocks/MockToken.sol"
+      ],
+      "versionRequirement": "^0.8.13",
+      "artifacts": {
+        "MockPaymentManagerTest": {
+          "0.8.21+commit.d9974bed.Darwin.appleclang": "MockPaymentManager.t.sol/MockPaymentManagerTest.json"
+        }
+      }
+    },
     "test/core/SafetyFactorOracle.t.sol": {
-      "lastModificationDate": 1695924465143,
+      "lastModificationDate": 1702551181351,
       "contentHash": "7cab6bce7cae9883cb8c59602727e4de",
       "sourceName": "test/core/SafetyFactorOracle.t.sol",
       "solcConfig": {
@@ -1874,8 +2138,8 @@
       }
     },
     "test/mocks/MockAVS.sol": {
-      "lastModificationDate": 1702569391762,
-      "contentHash": "3ae712ce95fc340c638cbb5038477be6",
+      "lastModificationDate": 1702893877870,
+      "contentHash": "2ad897267b2c5b48cebf9771061588c0",
       "sourceName": "test/mocks/MockAVS.sol",
       "solcConfig": {
         "settings": {
@@ -1922,8 +2186,8 @@
       }
     },
     "test/mocks/MockPaymentManager.sol": {
-      "lastModificationDate": 1702648146075,
-      "contentHash": "6f4e82c3bc5c7728131334c10a61135a",
+      "lastModificationDate": 1702905431369,
+      "contentHash": "45387998cb921951df7f855f74927a5a",
       "sourceName": "test/mocks/MockPaymentManager.sol",
       "solcConfig": {
         "settings": {

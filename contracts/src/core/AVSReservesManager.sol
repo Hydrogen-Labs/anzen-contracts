@@ -7,13 +7,17 @@ import {IPaymentManager} from "../interfaces/IPaymentManager.sol";
 
 import {SafeERC20} from "openzeppelin-contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "openzeppelin-contracts/token/ERC20/IERC20.sol";
-import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
 import "openzeppelin-contracts/utils/math/Math.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
 import {console2} from "forge-std/Test.sol";
 
-contract AVSReservesManager is Ownable, IAVSReservesManager {
+contract AVSReservesManager is IAVSReservesManager, AccessControl {
     using SafeERC20 for IERC20;
+
+    bytes32 public constant AVS_GOV_ROLE = keccak256("AVS_GOV_ROLE");
+    bytes32 public constant ANZEN_GOV_ROLE = keccak256("ANZEN_GOV_ROLE");
+
     // State variables
     int256 public SF_lower_bound; // Desired lower limit for Safety Factor
     int256 public SF_upper_bound; // Desired upper limit for Safety Factor
@@ -28,6 +32,7 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
     uint256 public lastEpochUpdateTimestamp; // Last time the epoch was updated
     uint256 public PRECISION = 10 ** 9; // Precision for tokenFlow
 
+    uint256 public feeBPS = 300; // 5%
     uint256 public constant MAX_PERFORMANCE_FEE_BPS = 500; // 5%
     uint256 public constant BPS_DENOMINATOR = 10_000; // 10,000
 
@@ -50,7 +55,7 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
         address _safetyFactorOracle,
         address _initialOwner,
         address _protocol
-    ) Ownable(_initialOwner) {
+    ) {
         tokensPerSecond = _initial_tokenFlow;
         SF_lower_bound = _SF_desired_lower;
         SF_upper_bound = _SF_desired_upper;
@@ -62,6 +67,9 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
         token = IERC20(_token);
         safetyFactorOracle = ISafetyFactorOracle(_safetyFactorOracle);
         protocol = _protocol;
+
+        _grantRole(AVS_GOV_ROLE, _initialOwner);
+        _grantRole(ANZEN_GOV_ROLE, msg.sender);
     }
 
     // Modifier to restrict functions to only run after the epoch has expired
@@ -106,11 +114,22 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
         emit TokensTransferredToPaymentMaster(_totalTokenTransfered);
     }
 
-    function overrideTokensPerSecond(
-        uint256 _newTokensPerSecond
-    ) external onlyOwner {
+    function overrideTokensPerSecond(uint256 _newTokensPerSecond) external {
+        require(hasRole(AVS_GOV_ROLE, msg.sender), "Caller is not a AVS Gov");
         _adjustClaimableTokens();
         tokensPerSecond = _newTokensPerSecond;
+    }
+
+    function adjustFeeBps(uint256 _newFeeBps) external {
+        require(
+            hasRole(ANZEN_GOV_ROLE, msg.sender),
+            "Caller is not a Anzen Gov"
+        );
+        require(
+            _newFeeBps <= MAX_PERFORMANCE_FEE_BPS,
+            "Fee cannot be greater than 5%"
+        );
+        feeBPS = _newFeeBps;
     }
 
     function updateSafetyFactorParams(
@@ -118,7 +137,8 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
         int256 _SF_desired_upper,
         uint256 _ReductionFactor,
         uint256 _MaxRateLimit
-    ) external onlyOwner {
+    ) external {
+        require(hasRole(AVS_GOV_ROLE, msg.sender), "Caller is not a AVS Gov");
         require(
             _SF_desired_lower < _SF_desired_upper,
             "Lower bound must be less than upper bound"
@@ -156,7 +176,7 @@ contract AVSReservesManager is Ownable, IAVSReservesManager {
         if (prevTokensPerSecond > tokensPerSecond) {
             uint256 _tokensSaved = elapsedTime *
                 (prevTokensPerSecond - tokensPerSecond);
-            _fee = (_tokensSaved * MAX_PERFORMANCE_FEE_BPS) / BPS_DENOMINATOR;
+            _fee = (_tokensSaved * feeBPS) / BPS_DENOMINATOR;
         }
 
         uint256 _tokensGained = (elapsedTime * tokensPerSecond) - _fee;

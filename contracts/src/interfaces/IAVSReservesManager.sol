@@ -4,18 +4,18 @@ pragma solidity ^0.8.21;
 interface IAVSReservesManager {
     // Event declaration
     event TokenFlowUpdated(uint256 newTokenFlow);
-    event TokensTransferredToPaymentMaster(uint256 _totalTokenTransfered);
+    event TokensTransferredToPaymentMaster(uint256 totalTokenTransfered);
 
     function updateFlow() external;
 
     function transferToPaymentManager() external;
 
-    function overrideTokensPerSecond(uint256 _newTokensPerSecond) external;
+    function overrideTokensPerSecond(uint256 newTokensPerSecond) external;
 
     function updateSafetyFactorParams(
-        int256 _SF_desired_lower,
-        int256 _SF_desired_upper,
-        uint256 _ReductionFactor,
-        uint256 _MaxRateLimit
+        int256 sf_desired_lower,
+        int256 sf_desired_upper,
+        uint256 reductionFactor,
+        uint256 maxRateLimit
     ) external;
 }

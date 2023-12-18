@@ -11,7 +11,7 @@ interface ISafetyFactorOracle {
     function getSafetyFactor(address protocol) external view returns (int256);
 
     function getProposedSafetyFactor(
-        address _protocol
+        address protocol
     ) external view returns (int256);
 
     function signers(address signer) external view returns (bool);
@@ -23,14 +23,14 @@ interface ISafetyFactorOracle {
     // Owner functions
     function transferOwnership(address newOwner) external;
 
-    function addSigner(address _signer) external;
+    function addSigner(address signer) external;
 
-    function removeSigner(address _signer) external;
+    function removeSigner(address signer) external;
 
-    function updateQuorum(uint64 _quorum) external;
+    function updateQuorum(uint64 quorum) external;
 
     // Signer functions
-    function proposeSafetyFactor(int256 _newSF, address protocol) external;
+    function proposeSafetyFactor(int256 newSF, address protocol) external;
 
     function approveSafetyFactor(address protocol) external;
 

@@ -43,7 +43,7 @@ contract PaymentManager is IPaymentManager, Ownable {
         address _restakeTokenAddress,
         address _govTokenAddress,
         address _avsReservesManagerAddress
-    ) Ownable(address(0)) {
+    ) Ownable(msg.sender) {
         restakeToken = ERC20(_restakeTokenAddress);
         govToken = ERC20(_govTokenAddress);
         avsReservesManagerAddress = _avsReservesManagerAddress;
@@ -54,10 +54,10 @@ contract PaymentManager is IPaymentManager, Ownable {
         _requireNonZeroAmount(_amount);
 
         uint currentStake = stakes[msg.sender];
-        uint GOVGain;
+        uint govGain;
         // Grab any accumulated GOV gains from the current stake
         if (currentStake != 0) {
-            GOVGain = _getPendingGOVGain(msg.sender);
+            govGain = _getPendingGOVGain(msg.sender);
         }
 
         _updateUserSnapshots(msg.sender);
@@ -73,7 +73,7 @@ contract PaymentManager is IPaymentManager, Ownable {
 
         // Send accumulated GOV gains to the caller
         if (currentStake != 0) {
-            govToken.transfer(msg.sender, GOVGain);
+            govToken.transfer(msg.sender, govGain);
         }
     }
 
@@ -84,40 +84,40 @@ contract PaymentManager is IPaymentManager, Ownable {
         _requireUserHasStake(currentStake);
 
         // Grab any accumulated GOV gains from the current stake
-        uint GOVGain = _getPendingGOVGain(msg.sender);
+        uint govGain = _getPendingGOVGain(msg.sender);
 
         _updateUserSnapshots(msg.sender);
 
         if (_amount > 0) {
-            uint256 RestakeToWithdraw = Math.min(_amount, currentStake);
+            uint256 restakeToWithdraw = Math.min(_amount, currentStake);
 
-            uint newStake = currentStake.sub(RestakeToWithdraw);
+            uint newStake = currentStake.sub(restakeToWithdraw);
 
             // Decrease user's stake and total Restake staked
             stakes[msg.sender] = newStake;
-            totalRestaked = totalRestaked.sub(RestakeToWithdraw);
+            totalRestaked = totalRestaked.sub(restakeToWithdraw);
 
             // Transfer unstaked Restake to user
-            restakeToken.transfer(msg.sender, RestakeToWithdraw);
+            restakeToken.transfer(msg.sender, restakeToWithdraw);
         }
 
         // Send accumulated GOV gains to the caller
-        govToken.transfer(msg.sender, GOVGain);
+        govToken.transfer(msg.sender, govGain);
     }
 
     // --- Reward-per-unit-staked increase functions. Called by core contracts ---
 
     function increaseF_GOV(uint _GOVFee) external {
         _requireCallerIsAVSReservesManager();
-        uint GOVFeePerRestakeStaked;
+        uint govFeePerRestakeStaked;
 
         if (totalRestaked > 0) {
-            GOVFeePerRestakeStaked = _GOVFee.mul(DECIMAL_PRECISION).div(
+            govFeePerRestakeStaked = _GOVFee.mul(DECIMAL_PRECISION).div(
                 totalRestaked
             );
         }
 
-        F_GOV = F_GOV.add(GOVFeePerRestakeStaked);
+        F_GOV = F_GOV.add(govFeePerRestakeStaked);
     }
 
     // --- Pending reward functions ---
@@ -127,11 +127,11 @@ contract PaymentManager is IPaymentManager, Ownable {
     }
 
     function _getPendingGOVGain(address _user) internal view returns (uint) {
-        uint F_GOV_Snapshot = f_gov_snapshots[_user];
-        uint GOVGain = stakes[_user].mul(F_GOV.sub(F_GOV_Snapshot)).div(
+        uint f_gov_snapshot = f_gov_snapshots[_user];
+        uint govGain = stakes[_user].mul(F_GOV.sub(f_gov_snapshot)).div(
             DECIMAL_PRECISION
         );
-        return GOVGain;
+        return govGain;
     }
 
     // --- Internal helper functions ---
