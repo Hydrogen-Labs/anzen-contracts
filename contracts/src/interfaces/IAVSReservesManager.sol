@@ -18,4 +18,6 @@ interface IAVSReservesManager {
         uint256 reductionFactor,
         uint256 maxRateLimit
     ) external;
+
+    function setPaymentMaster(address _paymentMaster) external;
 }

@@ -3,8 +3,9 @@ pragma solidity ^0.8.13;
 
 import "../structs/SafetyFactorStructs.sol";
 import {ISafetyFactorOracle} from "../interfaces/ISafetyFactorOracle.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract SafetyFactorOracle is ISafetyFactorOracle {
+contract SafetyFactorOracle is ISafetyFactorOracle, Ownable {
     mapping(address protocol => SafetyFactorSnapshot)
         public safetyFactorSnapshots; // Safety Factor snapshots for each protocol
     mapping(address protocol => ProposedSafetyFactorSnapshot)
@@ -16,27 +17,8 @@ contract SafetyFactorOracle is ISafetyFactorOracle {
         public lastSignTimes; // Last time a signer signed (to prevent double signing)
 
     uint64 public quorum; // Quorum for the Safety Factor update
-    address public owner;
 
-    // Set the contract deployer as the owner
-    constructor() {
-        owner = msg.sender;
-    }
-
-    // Modifier to restrict access to owner only
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only the owner can call this function");
-        _;
-    }
-
-    // Optional: Allow the owner to transfer ownership to another address
-    function transferOwnership(address _newOwner) external onlyOwner {
-        require(
-            _newOwner != address(0),
-            "New owner cannot be the zero address"
-        );
-        owner = _newOwner;
-    }
+    constructor() Ownable(msg.sender) {}
 
     modifier onlySigner() {
         require(signers[msg.sender], "Only signers can call this function");

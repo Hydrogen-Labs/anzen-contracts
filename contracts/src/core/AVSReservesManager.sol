@@ -12,6 +12,12 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 import {console2} from "forge-std/Test.sol";
 
+// The AVSReservesManager contract is responsible for managing the token flow to the Payment Master contract
+// It is also responsible for updating the token flow based on the Safety Factor
+// The Safety Factor is determined by the Safety Factor Oracle contract which represents the protocol's attack surface health
+
+// The reserves manager serves as a 'battery' for the Payment Master contract:
+// Storing excess tokens when the protocol is healthy and releasing them when the protocol is in need of more security
 contract AVSReservesManager is IAVSReservesManager, AccessControl {
     using SafeERC20 for IERC20;
 
@@ -50,7 +56,6 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         uint256 _ReductionFactor,
         uint256 _MaxRateLimit,
         uint256 _epochLength,
-        address _paymentMaster,
         address _token,
         address _safetyFactorOracle,
         address _initialOwner,
@@ -63,7 +68,6 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         MaxRateLimit = _MaxRateLimit;
         minEpochDuration = _epochLength;
         lastEpochUpdateTimestamp = block.timestamp;
-        paymentMaster = IPaymentManager(_paymentMaster);
         token = IERC20(_token);
         safetyFactorOracle = ISafetyFactorOracle(_safetyFactorOracle);
         protocol = _protocol;
@@ -79,6 +83,11 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
             "Epoch not yet expired"
         );
         _;
+    }
+
+    function setPaymentMaster(address _paymentMaster) external {
+        require(hasRole(AVS_GOV_ROLE, msg.sender), "Caller is not a AVS Gov");
+        paymentMaster = IPaymentManager(_paymentMaster);
     }
 
     // Function to update Safety Factor (SF)
@@ -109,12 +118,15 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         claimableTokens -= _totalTokenTransfered;
 
         token.transfer(address(paymentMaster), _totalTokenTransfered);
-        // paymentMaster.receivePayment(_totalTokenTransfered);
+        paymentMaster.increaseF_GOV(_totalTokenTransfered);
 
         emit TokensTransferredToPaymentMaster(_totalTokenTransfered);
     }
 
     function overrideTokensPerSecond(uint256 _newTokensPerSecond) external {
+        // This function is only callable by the AVS delegated address and should only be used in emergency situations
+        // TODO: Add a timelock
+
         require(hasRole(AVS_GOV_ROLE, msg.sender), "Caller is not a AVS Gov");
         _adjustClaimableTokens();
         tokensPerSecond = _newTokensPerSecond;
@@ -138,6 +150,8 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         uint256 _ReductionFactor,
         uint256 _MaxRateLimit
     ) external {
+        // This function is only callable by the AVS delegated address
+        // TODO: Add a timelock
         require(hasRole(AVS_GOV_ROLE, msg.sender), "Caller is not a AVS Gov");
         require(
             _SF_desired_lower < _SF_desired_upper,

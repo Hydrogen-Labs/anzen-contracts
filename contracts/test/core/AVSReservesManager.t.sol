@@ -6,15 +6,16 @@ import {AVSReservesManager} from "../../src/core/AVSReservesManager.sol";
 import {MockToken} from "../mocks/MockToken.sol";
 import {IAVSReservesManager} from "../../src/interfaces/IAVSReservesManager.sol";
 import {SafetyFactorOracle} from "../../src/core/SafetyFactorOracle.sol";
+import {PaymentManager} from "../mocks/MockPaymentManager.sol";
 
 contract AVSReservesManagerTest is Test {
     MockToken token;
     AVSReservesManager avsReservesManager;
     SafetyFactorOracle safetyFactorOracle;
+    PaymentManager paymentManager;
 
     address internal alice = vm.addr(0x1);
     address internal bob = vm.addr(0x2);
-    address internal paymentMaster = vm.addr(0x3);
     address internal protocol = vm.addr(0x4);
 
     function setUp() public {
@@ -22,6 +23,7 @@ contract AVSReservesManagerTest is Test {
 
         token = new MockToken("MockToken", "MTK");
         safetyFactorOracle = new SafetyFactorOracle();
+
         avsReservesManager = new AVSReservesManager(
             100,
             0,
@@ -29,12 +31,19 @@ contract AVSReservesManagerTest is Test {
             950_000_000,
             200_000_000,
             1 days,
-            paymentMaster,
             address(token),
             address(safetyFactorOracle),
             address(this),
             protocol
         );
+
+        paymentManager = new PaymentManager(
+            address(token),
+            address(token),
+            address(avsReservesManager)
+        );
+
+        avsReservesManager.setPaymentMaster(address(paymentManager));
 
         token.mint(address(avsReservesManager), 10 ** 12);
 
@@ -48,7 +57,10 @@ contract AVSReservesManagerTest is Test {
         avsReservesManager.transferToPaymentManager();
 
         uint256 expectedTokenBalance = 2 days * 100;
-        assertEq(token.balanceOf(address(paymentMaster)), expectedTokenBalance);
+        assertEq(
+            token.balanceOf(address(paymentManager)),
+            expectedTokenBalance
+        );
     }
 
     function testUpdateFlowDown() public {

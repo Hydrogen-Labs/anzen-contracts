@@ -145,18 +145,18 @@ contract PaymentManager is IPaymentManager, Ownable {
     function _requireCallerIsAVSReservesManager() internal view {
         require(
             msg.sender == avsReservesManagerAddress,
-            "RestakeStaking: caller is not BorrowerOps"
+            "Payment Manager: caller is not AVSReservesManager"
         );
     }
 
     function _requireUserHasStake(uint currentStake) internal pure {
         require(
             currentStake > 0,
-            "RestakeStaking: User must have a non-zero stake"
+            "Payment Manager: User must have a non-zero stake"
         );
     }
 
     function _requireNonZeroAmount(uint _amount) internal pure {
-        require(_amount > 0, "RestakeStaking: Amount must be non-zero");
+        require(_amount > 0, "Payment Manager: Amount must be non-zero");
     }
 }

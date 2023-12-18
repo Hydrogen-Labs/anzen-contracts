@@ -18,11 +18,7 @@ interface ISafetyFactorOracle {
 
     function quorum() external view returns (uint64);
 
-    function owner() external view returns (address);
-
     // Owner functions
-    function transferOwnership(address newOwner) external;
-
     function addSigner(address signer) external;
 
     function removeSigner(address signer) external;
