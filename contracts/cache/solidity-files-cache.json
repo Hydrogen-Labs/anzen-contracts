@@ -1556,8 +1556,8 @@
       }
     },
     "src/core/AVSReservesManager.sol": {
-      "lastModificationDate": 1702913913990,
-      "contentHash": "8084e217659cd0b16b036e1bccca385e",
+      "lastModificationDate": 1702979117819,
+      "contentHash": "95448196ea586b67d2c0be4d8865cb25",
       "sourceName": "src/core/AVSReservesManager.sol",
       "solcConfig": {
         "settings": {
@@ -1914,8 +1914,8 @@
       }
     },
     "test/core/AVSIntegration.t.sol": {
-      "lastModificationDate": 1702914508213,
-      "contentHash": "230417e420f559bb71c1096068cfef42",
+      "lastModificationDate": 1702982179027,
+      "contentHash": "8ec367f70df5c72a5133c15816f05da0",
       "sourceName": "test/core/AVSIntegration.t.sol",
       "solcConfig": {
         "settings": {
@@ -2228,8 +2228,8 @@
       }
     },
     "test/mocks/MockAVS.sol": {
-      "lastModificationDate": 1702893877870,
-      "contentHash": "2ad897267b2c5b48cebf9771061588c0",
+      "lastModificationDate": 1702979838883,
+      "contentHash": "7e89d5781c0d0e49416ef98b620698db",
       "sourceName": "test/mocks/MockAVS.sol",
       "solcConfig": {
         "settings": {

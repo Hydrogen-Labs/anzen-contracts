@@ -8,8 +8,8 @@ contract MockAVS {
     IAVSReservesManager public avsReservesManager;
     ERC20 public rewardToken;
 
-    constructor(IAVSReservesManager _avsReservesManager, ERC20 _token) {
-        avsReservesManager = _avsReservesManager;
-        rewardToken = _token;
+    constructor(address _avsReservesManager, address _token) {
+        avsReservesManager = IAVSReservesManager(_avsReservesManager);
+        rewardToken = ERC20(_token);
     }
 }

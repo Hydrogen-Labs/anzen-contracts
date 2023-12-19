@@ -36,11 +36,11 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
     uint256 public prevTokensPerSecond; // Previous flow epoch token distribution
     uint256 public minEpochDuration; // Length of each epoch in seconds
     uint256 public lastEpochUpdateTimestamp; // Last time the epoch was updated
-    uint256 public PRECISION = 10 ** 9; // Precision for tokenFlow
 
     uint256 public feeBPS = 300; // 5%
     uint256 public constant MAX_PERFORMANCE_FEE_BPS = 500; // 5%
     uint256 public constant BPS_DENOMINATOR = 10_000; // 10,000
+    uint256 public PRECISION = 10 ** 9; // Precision for tokenFlow
 
     IERC20 public token; // Token to be distributed
     address public protocol; // Address of the protocol
