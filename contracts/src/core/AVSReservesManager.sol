@@ -172,6 +172,10 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
     // Function to adjust token flow rate for the next epoch based on Safety Factor
     function _adjustEpochFlow() private {
         // check how many epochLengths have passed since lastEpochUpdateTime and update epoch accordingly
+
+        // todo: consider isntead of step functions, use a linear function to adjust token flow based on SF divergence
+        // from desired range with a max/min rate limit
+
         int256 _SF = safetyFactorOracle.getSafetyFactor(protocol);
         prevTokensPerSecond = tokensPerSecond;
         if (_SF > SF_upper_bound) {
@@ -191,12 +195,13 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
             uint256 _tokensSaved = elapsedTime *
                 (prevTokensPerSecond - tokensPerSecond);
             _fee = (_tokensSaved * feeBPS) / BPS_DENOMINATOR;
+            claimableFees += _fee;
         }
 
         uint256 _tokensGained = (elapsedTime * tokensPerSecond) - _fee;
 
         claimableTokens += _tokensGained;
-        claimableFees += _fee;
+
         lastEpochUpdateTimestamp = block.timestamp;
     }
 }

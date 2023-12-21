@@ -21,7 +21,9 @@ AVS-->|Emmisions Schedule| Reserves;
 Reserves-->|Payout| EigenlayerPaymentsManager;
 EigenlayerPaymentsManager-->|Claimable Tokens|Operators;
 
-Anzen-.->|Consensus adjustment on rate of payments|Reserves
+SafetyFactorOracle-.->|Consensus adjustment on rate of payments|Reserves
+
+Anzen-.->|Safety Factor Calculation/Consensus|SafetyFactorOracle;
 
 ```
 
@@ -32,6 +34,10 @@ $ cd contracts
 ```
 
 ### Build
+
+    ```shell
+    $ forge build
+    ```
 
 ### Test
 
@@ -61,12 +67,6 @@ $ anvil
 
 ```shell
 forge script script/Deploy.s.sol:Deploy --rpc-url "https:ethereum-goerli.publicnode.com" --broadcast --verify -vvvv
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
 ```
 
 ### Help

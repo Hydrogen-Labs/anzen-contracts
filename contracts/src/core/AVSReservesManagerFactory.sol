@@ -1,16 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import "./AVSReservesManager.sol";
+import {AVSReservesManager} from "./AVSReservesManager.sol";
+import {ISafetyFactorOracle} from "../interfaces/ISafetyFactorOracle.sol";
+
 import "openzeppelin-contracts/access/Ownable.sol";
 
 contract AVSReservesManagerFactory is Ownable {
     // Keep track of all the deployed contracts (optional)
     address[] public deployedContracts;
 
+    ISafetyFactorOracle public safetyFactorOracle;
+
     event AVSReservesManagerDeployed(address indexed manager);
 
-    constructor() Ownable(msg.sender) {}
+    constructor(
+        address _safetyFactorOracle // Safety Factor Oracle contract
+    ) Ownable(msg.sender) {
+        safetyFactorOracle = ISafetyFactorOracle(_safetyFactorOracle);
+    }
 
     function createAVSReservesManager(
         uint256 _initial_tokenFlow,
@@ -20,11 +28,10 @@ contract AVSReservesManagerFactory is Ownable {
         uint256 _MaxRateLimit,
         uint256 _epochLength,
         address _token,
-        address _safetyFactorOracle,
         address _initialOwner,
         address _protocol
     ) external onlyOwner returns (address) {
-        // Ensure only the owner can create a new AVSReservesManager
+        // Every AVS will it's own AVSReservesManager contract to manage the token flow
         AVSReservesManager newManager = new AVSReservesManager(
             _initial_tokenFlow,
             _SF_desired_lower,
@@ -33,7 +40,7 @@ contract AVSReservesManagerFactory is Ownable {
             _MaxRateLimit,
             _epochLength,
             _token,
-            _safetyFactorOracle,
+            address(safetyFactorOracle),
             _initialOwner,
             _protocol
         );

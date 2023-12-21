@@ -42,6 +42,10 @@ contract SafetyFactorOracle is ISafetyFactorOracle, Ownable {
         int256 _newSF,
         address _protocol
     ) external onlySigner {
+        // Safety factor is calculated by CoC - PfC / CoC
+        // This calculation is done off-chain and the result is passed to this contract
+        // the result is confirmed by the signers of this contract
+
         require(
             proposedSafetyFactorSnapshots[_protocol].status != Status.Pending,
             "A proposal is already pending"

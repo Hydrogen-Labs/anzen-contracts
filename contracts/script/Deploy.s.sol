@@ -23,7 +23,9 @@ contract Deploy is Script {
 
         SafetyFactorOracle safetyFactorOracle = new SafetyFactorOracle();
 
-        AVSReservesManagerFactory avsReservesManagerFactory = new AVSReservesManagerFactory();
+        AVSReservesManagerFactory avsReservesManagerFactory = new AVSReservesManagerFactory(
+                address(safetyFactorOracle)
+            );
 
         avsReservesManagerFactory.createAVSReservesManager(
             100,
@@ -33,7 +35,6 @@ contract Deploy is Script {
             200_000_000,
             1 days,
             address(rewardToken),
-            address(safetyFactorOracle),
             deployer,
             protocol
         );
