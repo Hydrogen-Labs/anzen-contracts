@@ -17,14 +17,18 @@ directory.
 
 ```mermaid
 graph TD;
-AVS-->|Emmisions Schedule| Reserves;
-Reserves-->|Payout| EigenlayerPaymentsManager;
+AVS-.->|Leverage Eigenlayer security to do valuable work| AVSRewardToken;
+AVSRewardToken-->|Emmisions Schedule| Reserves;
+Reserves-->|Rate-based Payout| EigenlayerPaymentsManager;
 EigenlayerPaymentsManager-->|Claimable Tokens|Operators;
 
-SafetyFactorOracle-.->|Consensus adjustment on rate of payments|Reserves
+SafetyFactorOracle-.->|Adjustments to rate of payments|Reserves
 
 Anzen-.->|Safety Factor Calculation/Consensus|SafetyFactorOracle;
 
+Reserves-->|Performance Fee: % emission savings|Anzen;
+
+Operators-.->|Provide economic security|AVS;
 ```
 
 ## Usage
@@ -35,9 +39,9 @@ $ cd contracts
 
 ### Build
 
-    ```shell
-    $ forge build
-    ```
+```shell
+$ forge build
+```
 
 ### Test
 
