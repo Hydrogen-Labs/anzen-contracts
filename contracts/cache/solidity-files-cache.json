@@ -1500,8 +1500,8 @@
       }
     },
     "script/Deploy.s.sol": {
-      "lastModificationDate": 1703085702689,
-      "contentHash": "f1c5d27684cde49321daff7044e72691",
+      "lastModificationDate": 1703151492065,
+      "contentHash": "3445c188116fb87ad71dd0d0d9026e11",
       "sourceName": "script/Deploy.s.sol",
       "solcConfig": {
         "settings": {
@@ -1568,6 +1568,7 @@
         "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
         "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
         "src/core/AVSReservesManager.sol",
+        "src/core/AVSReservesManagerFactory.sol",
         "src/core/SafetyFactorOracle.sol",
         "src/interfaces/IAVSReservesManager.sol",
         "src/interfaces/IPaymentManager.sol",

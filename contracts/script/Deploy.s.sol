@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 import {Script, console2} from "forge-std/Script.sol";
 import {MockToken} from "../test/mocks/MockToken.sol";
 import {AVSReservesManager} from "../src/core/AVSReservesManager.sol";
+import {AVSReservesManagerFactory} from "../src/core/AVSReservesManagerFactory.sol";
 import {PaymentManager} from "../test/mocks/MockPaymentManager.sol";
 import {SafetyFactorOracle} from "../src/core/SafetyFactorOracle.sol";
 
@@ -22,7 +23,9 @@ contract Deploy is Script {
 
         SafetyFactorOracle safetyFactorOracle = new SafetyFactorOracle();
 
-        AVSReservesManager avsReservesManager = new AVSReservesManager(
+        AVSReservesManagerFactory avsReservesManagerFactory = new AVSReservesManagerFactory();
+
+        avsReservesManagerFactory.createAVSReservesManager(
             100,
             0,
             200_000_000,
@@ -33,6 +36,10 @@ contract Deploy is Script {
             address(safetyFactorOracle),
             deployer,
             protocol
+        );
+
+        AVSReservesManager avsReservesManager = AVSReservesManager(
+            avsReservesManagerFactory.deployedContracts(0)
         );
 
         PaymentManager paymentManager = new PaymentManager(

@@ -7,10 +7,10 @@ directory.
 
 | Contract                                                                      | Description                                                      | Deployment                                                                                   |
 | ----------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| [AVSReservesManagerFactory](contracts/src/core/AVSReservesManagerFactory.sol) | Factory for deploying AVSReservesManager contracts               | [0xa...Db7](https://goerli.etherscan.io/address/0xaFb50639327025951a7e995ee0827e52cDfAEDb7)  |
-| [AVSReservesManager](contracts/src/core/AVSReservesManager.sol)               | Coordinates payment emmissions from the AVS to the AVS operators | [0xa...Db7](https://goerli.etherscan.io/address/0xaFb50639327025951a7e995ee0827e52cDfAEDb7)  |
-| [SafetyFactorOracle](contracts/src/core/SafetyFactorOracle.sol)               | Provides a safety factor feed for the given AVS                  | [0xf...8C1](https://goerli.etherscan.io/address/0xfa8995b2Bc50a6fe692Fe866286f4a24ab2aA8C1)  |
-| [MockPaymentManager](contracts/test/mocks/MockPaymentManager.sol)             | Mock eigenlayer payment manager for testing purposes             | [0xa...a2f](https://goerli.etherscan.io//address/0xad284F2CBe5D9b0fa85B6c4EE26FCcdB3739Ba2f) |
+| [AVSReservesManagerFactory](contracts/src/core/AVSReservesManagerFactory.sol) | Factory for deploying AVSReservesManager contracts               | [0x8...1A0](https://goerli.etherscan.io/address/0x87641EA9Fb385820E726BaA1Fa3f8D35Be3B51A0)  |
+| [AVSReservesManager](contracts/src/core/AVSReservesManager.sol)               | Coordinates payment emmissions from the AVS to the AVS operators | [0x4...A77](https://goerli.etherscan.io/address/0x419d8D025806F3cC118Bb1c110D8B12EaE1aEA77)  |
+| [SafetyFactorOracle](contracts/src/core/SafetyFactorOracle.sol)               | Provides a safety factor feed for the given AVS                  | [0xb...083](https://goerli.etherscan.io/address/0xb67d80558b65099DC1F15D945513622f6436C083)  |
+| [MockPaymentManager](contracts/test/mocks/MockPaymentManager.sol)             | Mock eigenlayer payment manager for testing purposes             | [0xb...2ab](https://goerli.etherscan.io//address/0xb0959F59cBe1b5b45628a4A5e8c24C0b85d052ab) |
 | [MockAVS](contracts/test/mocks/MockAVS.sol)                                   | Mock AVS for testing purposes                                    |
 
 ## Payment Flow
