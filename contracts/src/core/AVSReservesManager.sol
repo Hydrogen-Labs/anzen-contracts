@@ -28,7 +28,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
     int256 public SF_lower_bound; // Desired lower limit for Safety Factor
     int256 public SF_upper_bound; // Desired upper limit for Safety Factor
     uint256 public ReductionFactor; // Factor by which tokenFlow will be reduced if SF is too high
-    uint256 public MaxRateLimit; // Maximum rate at which tokenFlow can be increased
+    uint256 public IncreaseFactor; // Maximum rate at which tokenFlow can be increased
 
     uint256 public claimableTokens; // Amount of tokens that can be transferred to the Payment Master contract
     uint256 public claimableFees; // Amount of fees that can be transferred to Anzen
@@ -37,7 +37,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
     uint256 public minEpochDuration; // Length of each epoch in seconds
     uint256 public lastEpochUpdateTimestamp; // Last time the epoch was updated
 
-    uint256 public feeBPS = 300; // 5%
+    uint256 public performanceFeeBPS = 300; // 5%
     uint256 public constant MAX_PERFORMANCE_FEE_BPS = 500; // 5%
     uint256 public constant BPS_DENOMINATOR = 10_000; // 10,000
     uint256 public PRECISION = 10 ** 9; // Precision for tokenFlow
@@ -59,18 +59,18 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         address _token,
         address _safetyFactorOracle,
         address _initialOwner,
-        address _protocol
+        address _protocolId
     ) {
         tokensPerSecond = _initial_tokenFlow;
         SF_lower_bound = _SF_desired_lower;
         SF_upper_bound = _SF_desired_upper;
         ReductionFactor = _ReductionFactor;
-        MaxRateLimit = _MaxRateLimit;
+        IncreaseFactor = _MaxRateLimit;
         minEpochDuration = _epochLength;
         lastEpochUpdateTimestamp = block.timestamp;
         token = IERC20(_token);
         safetyFactorOracle = ISafetyFactorOracle(_safetyFactorOracle);
-        protocol = _protocol;
+        protocol = _protocolId;
 
         _grantRole(AVS_GOV_ROLE, _initialOwner);
         _grantRole(ANZEN_GOV_ROLE, msg.sender);
@@ -90,8 +90,8 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         paymentMaster = IPaymentManager(_paymentMaster);
     }
 
-    // Function to update Safety Factor (SF)
     function updateFlow() public afterEpochExpired {
+        // This function programmatically adjusts the token flow based on the Safety Factor
         _adjustClaimableTokens();
         _adjustEpochFlow();
 
@@ -119,6 +119,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
 
         token.transfer(address(paymentMaster), _totalTokenTransfered);
         paymentMaster.increaseF_GOV(_totalTokenTransfered);
+        // Will hook into eigenlayer payment infrastructure
 
         emit TokensTransferredToPaymentMaster(_totalTokenTransfered);
     }
@@ -128,7 +129,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         // TODO: Add a timelock
 
         require(hasRole(AVS_GOV_ROLE, msg.sender), "Caller is not a AVS Gov");
-        _adjustClaimableTokens();
+        _calculateClaimableTokensAndFee();
         tokensPerSecond = _newTokensPerSecond;
     }
 
@@ -141,7 +142,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
             _newFeeBps <= MAX_PERFORMANCE_FEE_BPS,
             "Fee cannot be greater than 5%"
         );
-        feeBPS = _newFeeBps;
+        performanceFeeBPS = _newFeeBps;
     }
 
     function updateSafetyFactorParams(
@@ -166,7 +167,18 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         SF_lower_bound = _SF_desired_lower;
         SF_upper_bound = _SF_desired_upper;
         ReductionFactor = _ReductionFactor;
-        MaxRateLimit = _MaxRateLimit;
+        IncreaseFactor = _MaxRateLimit;
+    }
+
+    function claimableTokensWithAdjustment()
+        external
+        view
+        returns (uint256 _claimableTokens)
+    {
+        // Call this to see how many tokens can be claimed by the AVS
+        (uint256 _tokensGained, ) = _calculateClaimableTokensAndFee();
+
+        _claimableTokens = claimableTokens + _tokensGained;
     }
 
     // Function to adjust token flow rate for the next epoch based on Safety Factor
@@ -179,27 +191,37 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         int256 _SF = safetyFactorOracle.getSafetyFactor(protocol);
         prevTokensPerSecond = tokensPerSecond;
         if (_SF > SF_upper_bound) {
-            // Case 2: Excessive Safety Factor
+            // Case 2: Excessive Safety Factor -> Reduce token flow -> save tokens for future security needs
             tokensPerSecond = (tokensPerSecond * ReductionFactor) / PRECISION;
         } else if (_SF < SF_lower_bound) {
-            // Case 3: Inadequate Safety Factor
-            tokensPerSecond += (tokensPerSecond * MaxRateLimit) / PRECISION;
+            // Case 3: Inadequate Safety Factor -> Increase token flow -> encourage restaking
+            tokensPerSecond += (tokensPerSecond * IncreaseFactor) / PRECISION;
         }
     }
 
-    function _adjustClaimableTokens() private {
+    function _calculateClaimableTokensAndFee()
+        private
+        view
+        returns (uint256 _tokensGained, uint256 _fee)
+    {
         uint256 elapsedTime = block.timestamp - lastEpochUpdateTimestamp;
-        uint256 _fee = 0;
-
         if (prevTokensPerSecond > tokensPerSecond) {
+            // If the flow decreased, then the AVS saved tokens to be used in the future
             uint256 _tokensSaved = elapsedTime *
                 (prevTokensPerSecond - tokensPerSecond);
-            _fee = (_tokensSaved * feeBPS) / BPS_DENOMINATOR;
-            claimableFees += _fee;
+            _fee = (_tokensSaved * performanceFeeBPS) / BPS_DENOMINATOR;
         }
 
-        uint256 _tokensGained = (elapsedTime * tokensPerSecond) - _fee;
+        _tokensGained = (elapsedTime * tokensPerSecond) - _fee;
+    }
 
+    function _adjustClaimableTokens() private {
+        (
+            uint256 _tokensGained,
+            uint256 _fee
+        ) = _calculateClaimableTokensAndFee();
+
+        claimableFees += _fee;
         claimableTokens += _tokensGained;
 
         lastEpochUpdateTimestamp = block.timestamp;

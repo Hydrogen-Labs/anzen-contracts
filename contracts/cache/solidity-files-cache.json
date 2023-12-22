@@ -1585,8 +1585,8 @@
       }
     },
     "src/core/AVSReservesManager.sol": {
-      "lastModificationDate": 1703160297302,
-      "contentHash": "8cf80fd6ad6124bd155e8939d2ee8a81",
+      "lastModificationDate": 1703241998665,
+      "contentHash": "8dbf4caa14024f719fb64ef571ab4929",
       "sourceName": "src/core/AVSReservesManager.sol",
       "solcConfig": {
         "settings": {
@@ -1733,8 +1733,8 @@
       }
     },
     "src/core/SafetyFactorOracle.sol": {
-      "lastModificationDate": 1702911795787,
-      "contentHash": "88ce1b146c8701594f94ca3ff33dbacc",
+      "lastModificationDate": 1703166231669,
+      "contentHash": "385a1373f52ee2f631f0f36a566ecfea",
       "sourceName": "src/core/SafetyFactorOracle.sol",
       "solcConfig": {
         "settings": {
@@ -1779,8 +1779,8 @@
       }
     },
     "src/interfaces/IAVSReservesManager.sol": {
-      "lastModificationDate": 1702913952858,
-      "contentHash": "d8b18a702f7cacab2e46ad944d50f7a0",
+      "lastModificationDate": 1703241211363,
+      "contentHash": "a3add2ac5d46599b7eb66e37e28d41f6",
       "sourceName": "src/interfaces/IAVSReservesManager.sol",
       "solcConfig": {
         "settings": {
@@ -1943,7 +1943,7 @@
       }
     },
     "test/core/AVSIntegration.t.sol": {
-      "lastModificationDate": 1702982247791,
+      "lastModificationDate": 1703240904348,
       "contentHash": "8ec367f70df5c72a5133c15816f05da0",
       "sourceName": "test/core/AVSIntegration.t.sol",
       "solcConfig": {
@@ -2026,8 +2026,8 @@
       }
     },
     "test/core/AVSReservesManager.t.sol": {
-      "lastModificationDate": 1702913971415,
-      "contentHash": "85f8ee214e915bc6e30b88bef869c623",
+      "lastModificationDate": 1703240859567,
+      "contentHash": "d897bf16023508c42f8e751a44688c59",
       "sourceName": "test/core/AVSReservesManager.t.sol",
       "solcConfig": {
         "settings": {
@@ -2192,7 +2192,7 @@
       }
     },
     "test/core/SafetyFactorOracle.t.sol": {
-      "lastModificationDate": 1702551181351,
+      "lastModificationDate": 1702914008866,
       "contentHash": "7cab6bce7cae9883cb8c59602727e4de",
       "sourceName": "test/core/SafetyFactorOracle.t.sol",
       "solcConfig": {

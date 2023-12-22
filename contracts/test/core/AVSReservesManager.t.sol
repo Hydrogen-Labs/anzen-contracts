@@ -150,6 +150,6 @@ contract AVSReservesManagerTest is Test {
         assertEq(avsReservesManager.SF_lower_bound(), 1);
         assertEq(avsReservesManager.SF_upper_bound(), 10 ** 9);
         assertEq(avsReservesManager.ReductionFactor(), 200_000_000);
-        assertEq(avsReservesManager.MaxRateLimit(), 950_000_000);
+        assertEq(avsReservesManager.IncreaseFactor(), 950_000_000);
     }
 }

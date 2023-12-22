@@ -20,4 +20,10 @@ interface IAVSReservesManager {
     ) external;
 
     function setPaymentMaster(address _paymentMaster) external;
+
+    function claimableTokensWithAdjustment()
+        external
+        view
+        returns (uint256 _claimableTokens);
+    // Use this function to get the amount of tokens that can be claimed by the AVS
 }
