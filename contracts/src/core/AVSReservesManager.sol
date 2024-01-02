@@ -25,6 +25,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
     bytes32 public constant ANZEN_GOV_ROLE = keccak256("ANZEN_GOV_ROLE");
 
     // State variables
+
     int256 public SF_lower_bound; // Desired lower limit for Safety Factor
     int256 public SF_upper_bound; // Desired upper limit for Safety Factor
     uint256 public ReductionFactor; // Factor by which tokenFlow will be reduced if SF is too high
@@ -68,9 +69,10 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         IncreaseFactor = _MaxRateLimit;
         minEpochDuration = _epochLength;
         lastEpochUpdateTimestamp = block.timestamp;
+        protocol = _protocolId;
+
         token = IERC20(_token);
         safetyFactorOracle = ISafetyFactorOracle(_safetyFactorOracle);
-        protocol = _protocolId;
 
         _grantRole(AVS_GOV_ROLE, _initialOwner);
         _grantRole(ANZEN_GOV_ROLE, msg.sender);

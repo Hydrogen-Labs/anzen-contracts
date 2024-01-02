@@ -1,9 +1,11 @@
+## Anzen Protocol
+
+All of the information contained in this early Alpha release of the Anzen Protocol Contracts is likely to change prior to the launch of the protocol. This is released in this early state for research and educational purposes, and covers only a limited set of possible implementations and features of the Anzen Protocol.
+
 ## Contracts
 
 The source code for each contract is in the [`contracts/`](contracts/)
 directory.
-
-## Contracts
 
 | Contract                                                                      | Description                                                      | Deployment                                                                                   |
 | ----------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -21,13 +23,9 @@ AVS-.->|Leverage Eigenlayer security to do valuable work| AVSRewardToken;
 AVSRewardToken-->|Emmisions Schedule| Reserves;
 Reserves-->|Rate-based Payout| EigenlayerPaymentsManager;
 EigenlayerPaymentsManager-->|Claimable Tokens|Operators;
-
 SafetyFactorOracle-.->|Adjustments to rate of payments|Reserves
-
 Anzen-.->|Safety Factor Calculation/Consensus|SafetyFactorOracle;
-
 Reserves-->|Performance Fee: % emission savings|Anzen;
-
 Operators-.->|Provide economic security|AVS;
 ```
 
