@@ -1585,8 +1585,8 @@
       }
     },
     "src/core/AVSReservesManager.sol": {
-      "lastModificationDate": 1703241998665,
-      "contentHash": "8dbf4caa14024f719fb64ef571ab4929",
+      "lastModificationDate": 1704455185369,
+      "contentHash": "32f86a53d5613e43c87fc19274e43ccd",
       "sourceName": "src/core/AVSReservesManager.sol",
       "solcConfig": {
         "settings": {
@@ -1658,8 +1658,8 @@
       }
     },
     "src/core/AVSReservesManagerFactory.sol": {
-      "lastModificationDate": 1703159797885,
-      "contentHash": "dc315b179ebc0763bf3a51b7f9229daa",
+      "lastModificationDate": 1704454958442,
+      "contentHash": "b82b359bc9cb2e5b9b6377efcd5d52d0",
       "sourceName": "src/core/AVSReservesManagerFactory.sol",
       "solcConfig": {
         "settings": {
@@ -1779,8 +1779,8 @@
       }
     },
     "src/interfaces/IAVSReservesManager.sol": {
-      "lastModificationDate": 1703241211363,
-      "contentHash": "a3add2ac5d46599b7eb66e37e28d41f6",
+      "lastModificationDate": 1704454981851,
+      "contentHash": "9a5b0e63714ed47274e377c155cace86",
       "sourceName": "src/interfaces/IAVSReservesManager.sol",
       "solcConfig": {
         "settings": {
@@ -1820,8 +1820,8 @@
       }
     },
     "src/interfaces/IPaymentManager.sol": {
-      "lastModificationDate": 1702908877354,
-      "contentHash": "f1788e6184d81d759bfba5df2375f0db",
+      "lastModificationDate": 1704455253087,
+      "contentHash": "0fab3d7a4c9a0d22db69345d3b19c253",
       "sourceName": "src/interfaces/IPaymentManager.sol",
       "solcConfig": {
         "settings": {
@@ -1943,8 +1943,8 @@
       }
     },
     "test/core/AVSIntegration.t.sol": {
-      "lastModificationDate": 1703240904348,
-      "contentHash": "8ec367f70df5c72a5133c15816f05da0",
+      "lastModificationDate": 1704455315649,
+      "contentHash": "4450a0218da6368adddcd359da4109ae",
       "sourceName": "test/core/AVSIntegration.t.sol",
       "solcConfig": {
         "settings": {
@@ -2109,8 +2109,8 @@
       }
     },
     "test/core/MockPaymentManager.t.sol": {
-      "lastModificationDate": 1702914006524,
-      "contentHash": "d3f10fa4df2cb1b3feb82e49d19011fc",
+      "lastModificationDate": 1704455346906,
+      "contentHash": "93aa77c6a44c3bb58a74a6d6c587bde6",
       "sourceName": "test/core/MockPaymentManager.t.sol",
       "solcConfig": {
         "settings": {
@@ -2305,8 +2305,8 @@
       }
     },
     "test/mocks/MockPaymentManager.sol": {
-      "lastModificationDate": 1702913444658,
-      "contentHash": "baa77daa7a307456774d7f19efb88a5e",
+      "lastModificationDate": 1704455278367,
+      "contentHash": "133966f484ae4085c74c56d790c34a1a",
       "sourceName": "test/mocks/MockPaymentManager.sol",
       "solcConfig": {
         "settings": {

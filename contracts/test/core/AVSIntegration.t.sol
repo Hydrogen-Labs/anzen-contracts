@@ -79,11 +79,11 @@ contract AVSReservesManagerTest is Test {
 
         assertEq(rewardToken.balanceOf(address(paymentManager)), 1 days * 100);
         assertEq(
-            paymentManager.getPendingGOVGain(address(alice)),
+            paymentManager.getPendingRwrdGain(address(alice)),
             (1 days * 100) / 2
         );
         assertEq(
-            paymentManager.getPendingGOVGain(address(bob)),
+            paymentManager.getPendingRwrdGain(address(bob)),
             (1 days * 100) / 2
         );
 
@@ -122,11 +122,11 @@ contract AVSReservesManagerTest is Test {
             2 days * 100 + 1 days * 120
         );
         assertEq(
-            paymentManager.getPendingGOVGain(address(alice)),
+            paymentManager.getPendingRwrdGain(address(alice)),
             (2 days * 100 + 1 days * 120) / 2
         );
         assertEq(
-            paymentManager.getPendingGOVGain(address(bob)),
+            paymentManager.getPendingRwrdGain(address(bob)),
             (2 days * 100 + 1 days * 120) / 2
         );
     }

@@ -19,11 +19,11 @@ interface IAVSReservesManager {
         uint256 maxRateLimit
     ) external;
 
-    function setPaymentMaster(address _paymentMaster) external;
+    function setPaymentMaster(address paymentMaster) external;
 
     function claimableTokensWithAdjustment()
         external
         view
-        returns (uint256 _claimableTokens);
+        returns (uint256 claimableTokens);
     // Use this function to get the amount of tokens that can be claimed by the AVS
 }

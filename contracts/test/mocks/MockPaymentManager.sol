@@ -27,13 +27,13 @@ contract PaymentManager is IPaymentManager, Ownable {
     mapping(address => uint) public stakes;
 
     uint public totalRestaked;
-    uint public F_GOV; // Running sum of Restake fees per-Restake-staked
+    uint public F_RWRD; // Running sum of Restake fees per-Restake-staked
 
     // User snapshots F_GOV, taken at the point at which their latest deposit was made
-    mapping(address => uint) public f_gov_snapshots;
+    mapping(address => uint) public f_rwrd_snapshots;
 
     ERC20 public restakeToken;
-    ERC20 public govToken;
+    ERC20 public rewardToken;
 
     address public avsReservesManagerAddress;
 
@@ -41,11 +41,11 @@ contract PaymentManager is IPaymentManager, Ownable {
 
     constructor(
         address _restakeTokenAddress,
-        address _govTokenAddress,
+        address _rewardTokenAddress,
         address _avsReservesManagerAddress
     ) Ownable(msg.sender) {
         restakeToken = ERC20(_restakeTokenAddress);
-        govToken = ERC20(_govTokenAddress);
+        rewardToken = ERC20(_rewardTokenAddress);
         avsReservesManagerAddress = _avsReservesManagerAddress;
     }
 
@@ -54,10 +54,10 @@ contract PaymentManager is IPaymentManager, Ownable {
         _requireNonZeroAmount(_amount);
 
         uint currentStake = stakes[msg.sender];
-        uint govGain;
+        uint rwrdGain;
         // Grab any accumulated GOV gains from the current stake
         if (currentStake != 0) {
-            govGain = _getPendingGOVGain(msg.sender);
+            rwrdGain = _getPendingRwrdGain(msg.sender);
         }
 
         _updateUserSnapshots(msg.sender);
@@ -73,7 +73,7 @@ contract PaymentManager is IPaymentManager, Ownable {
 
         // Send accumulated GOV gains to the caller
         if (currentStake != 0) {
-            govToken.transfer(msg.sender, govGain);
+            rewardToken.transfer(msg.sender, rwrdGain);
         }
     }
 
@@ -84,7 +84,7 @@ contract PaymentManager is IPaymentManager, Ownable {
         _requireUserHasStake(currentStake);
 
         // Grab any accumulated GOV gains from the current stake
-        uint govGain = _getPendingGOVGain(msg.sender);
+        uint rwrdGain = _getPendingRwrdGain(msg.sender);
 
         _updateUserSnapshots(msg.sender);
 
@@ -102,42 +102,42 @@ contract PaymentManager is IPaymentManager, Ownable {
         }
 
         // Send accumulated GOV gains to the caller
-        govToken.transfer(msg.sender, govGain);
+        rewardToken.transfer(msg.sender, rwrdGain);
     }
 
     // --- Reward-per-unit-staked increase functions. Called by core contracts ---
 
-    function increaseF_GOV(uint _GOVFee) external {
+    function increaseF_RWRD(uint _RwrdFee) external {
         _requireCallerIsAVSReservesManager();
-        uint govFeePerRestakeStaked;
+        uint rwrdFeePerRestakeStaked;
 
         if (totalRestaked > 0) {
-            govFeePerRestakeStaked = _GOVFee.mul(DECIMAL_PRECISION).div(
+            rwrdFeePerRestakeStaked = _RwrdFee.mul(DECIMAL_PRECISION).div(
                 totalRestaked
             );
         }
 
-        F_GOV = F_GOV.add(govFeePerRestakeStaked);
+        F_RWRD = F_RWRD.add(rwrdFeePerRestakeStaked);
     }
 
     // --- Pending reward functions ---
 
-    function getPendingGOVGain(address _user) external view returns (uint) {
-        return _getPendingGOVGain(_user);
+    function getPendingRwrdGain(address _user) external view returns (uint) {
+        return _getPendingRwrdGain(_user);
     }
 
-    function _getPendingGOVGain(address _user) internal view returns (uint) {
-        uint f_gov_snapshot = f_gov_snapshots[_user];
-        uint govGain = stakes[_user].mul(F_GOV.sub(f_gov_snapshot)).div(
+    function _getPendingRwrdGain(address _user) internal view returns (uint) {
+        uint f_rwrd_snapshot = f_rwrd_snapshots[_user];
+        uint rwrdGain = stakes[_user].mul(F_RWRD.sub(f_rwrd_snapshot)).div(
             DECIMAL_PRECISION
         );
-        return govGain;
+        return rwrdGain;
     }
 
     // --- Internal helper functions ---
 
     function _updateUserSnapshots(address _user) internal {
-        f_gov_snapshots[_user] = F_GOV;
+        f_rwrd_snapshots[_user] = F_RWRD;
     }
 
     // --- 'require' functions ---

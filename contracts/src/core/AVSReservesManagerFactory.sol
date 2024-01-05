@@ -27,7 +27,7 @@ contract AVSReservesManagerFactory is Ownable {
         uint256 _ReductionFactor,
         uint256 _MaxRateLimit,
         uint256 _epochLength,
-        address _token,
+        address _rewardToken,
         address _initialOwner,
         address _protocol
     ) external onlyOwner returns (address) {
@@ -39,7 +39,7 @@ contract AVSReservesManagerFactory is Ownable {
             _ReductionFactor,
             _MaxRateLimit,
             _epochLength,
-            _token,
+            _rewardToken,
             address(safetyFactorOracle),
             _initialOwner,
             _protocol

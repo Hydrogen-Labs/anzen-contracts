@@ -10,11 +10,11 @@ contract MockToken is ERC20, Ownable {
         string memory _symbol
     ) ERC20(_name, _symbol) Ownable(msg.sender) {}
 
-    function mint(address to, uint256 amount) public virtual onlyOwner {
-        _mint(to, amount);
+    function mint(address _to, uint256 _amount) public virtual onlyOwner {
+        _mint(_to, _amount);
     }
 
-    function burn(address form, uint256 amount) public virtual {
-        _burn(form, amount);
+    function burn(address _from, uint256 _amount) public virtual {
+        _burn(_from, _amount);
     }
 }

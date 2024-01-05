@@ -43,7 +43,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
     uint256 public constant BPS_DENOMINATOR = 10_000; // 10,000
     uint256 public PRECISION = 10 ** 9; // Precision for tokenFlow
 
-    IERC20 public token; // Token to be distributed
+    IERC20 public rewardToken; // Token to be distributed
     address public protocol; // Address of the protocol
     address public anzen; // Address of the Anzen contract
     IPaymentManager public paymentMaster; // Address of the Payment Master contract
@@ -57,7 +57,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         uint256 _ReductionFactor,
         uint256 _MaxRateLimit,
         uint256 _epochLength,
-        address _token,
+        address _rewardToken,
         address _safetyFactorOracle,
         address _initialOwner,
         address _protocolId
@@ -71,7 +71,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         lastEpochUpdateTimestamp = block.timestamp;
         protocol = _protocolId;
 
-        token = IERC20(_token);
+        rewardToken = IERC20(_rewardToken);
         safetyFactorOracle = ISafetyFactorOracle(_safetyFactorOracle);
 
         _grantRole(AVS_GOV_ROLE, _initialOwner);
@@ -110,7 +110,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
         );
 
         // I_totalTokenTransferedepends on how you handle tokens, assuming Payment Master contract has a receivePayment function
-        uint256 _currentBalance = token.balanceOf(address(this));
+        uint256 _currentBalance = rewardToken.balanceOf(address(this));
         // Ensure that the amount transferred is not more than the current balance
         uint256 _totalTokenTransfered = Math.min(
             claimableTokens,
@@ -119,8 +119,8 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
 
         claimableTokens -= _totalTokenTransfered;
 
-        token.transfer(address(paymentMaster), _totalTokenTransfered);
-        paymentMaster.increaseF_GOV(_totalTokenTransfered);
+        rewardToken.transfer(address(paymentMaster), _totalTokenTransfered);
+        paymentMaster.increaseF_RWRD(_totalTokenTransfered);
         // Will hook into eigenlayer payment infrastructure
 
         emit TokensTransferredToPaymentMaster(_totalTokenTransfered);

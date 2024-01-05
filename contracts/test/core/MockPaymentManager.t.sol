@@ -51,8 +51,8 @@ contract MockPaymentManagerTest is Test {
 
         assertEq(paymentManager.totalRestaked(), 2000);
 
-        assertEq(paymentManager.getPendingGOVGain(address(alice)), 0);
-        assertEq(paymentManager.getPendingGOVGain(address(bob)), 0);
+        assertEq(paymentManager.getPendingRwrdGain(address(alice)), 0);
+        assertEq(paymentManager.getPendingRwrdGain(address(bob)), 0);
 
         vm.warp(1 days);
 
@@ -78,11 +78,11 @@ contract MockPaymentManagerTest is Test {
 
         rewardToken.mint(address(paymentManager), 1000);
         vm.prank(reservesManager);
-        paymentManager.increaseF_GOV(1000);
+        paymentManager.increaseF_RWRD(1000);
 
         // Stakes: Alice - 1000, Bob - 1000 (total 2000)
-        assertEq(paymentManager.getPendingGOVGain(address(alice)), 500);
-        assertEq(paymentManager.getPendingGOVGain(address(bob)), 500);
+        assertEq(paymentManager.getPendingRwrdGain(address(alice)), 500);
+        assertEq(paymentManager.getPendingRwrdGain(address(bob)), 500);
 
         vm.warp(1 days);
 
@@ -90,8 +90,8 @@ contract MockPaymentManagerTest is Test {
         paymentManager.unstake(500);
 
         // Stakes: Alice - 500, Bob - 1000 (total 1500)
-        assertEq(paymentManager.getPendingGOVGain(address(alice)), 0);
-        assertEq(paymentManager.getPendingGOVGain(address(bob)), 500);
+        assertEq(paymentManager.getPendingRwrdGain(address(alice)), 0);
+        assertEq(paymentManager.getPendingRwrdGain(address(bob)), 500);
         assertEq(rewardToken.balanceOf(address(alice)), 500);
 
         restakeToken.mint(address(carol), 1000);
@@ -101,7 +101,7 @@ contract MockPaymentManagerTest is Test {
         paymentManager.stake(1000);
 
         // Stakes: Alice - 500, Bob - 1000, Carol - 1000 (total 2500)
-        assertEq(paymentManager.getPendingGOVGain(address(carol)), 0);
+        assertEq(paymentManager.getPendingRwrdGain(address(carol)), 0);
 
         vm.warp(1 days);
 
@@ -111,15 +111,15 @@ contract MockPaymentManagerTest is Test {
 
         rewardToken.mint(address(paymentManager), 1000);
         vm.prank(reservesManager);
-        paymentManager.increaseF_GOV(1000);
+        paymentManager.increaseF_RWRD(1000);
 
         // Stakes: Alice - 500, Bob - 1000, Carol - 1000 (total 2500)
         // Alice: 1000 * 500 / 2500 = 200
         // Bob: 1000 * 1000 / 2500 = 400 + 500 (previous reward) = 900
         // Carol: 1000 * 1000 / 2500 = 400
 
-        assertEq(paymentManager.getPendingGOVGain(address(alice)), 200);
-        assertEq(paymentManager.getPendingGOVGain(address(bob)), 900);
-        assertEq(paymentManager.getPendingGOVGain(address(carol)), 400);
+        assertEq(paymentManager.getPendingRwrdGain(address(alice)), 200);
+        assertEq(paymentManager.getPendingRwrdGain(address(bob)), 900);
+        assertEq(paymentManager.getPendingRwrdGain(address(carol)), 400);
     }
 }
