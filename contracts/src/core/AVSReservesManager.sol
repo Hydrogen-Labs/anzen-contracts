@@ -187,7 +187,7 @@ contract AVSReservesManager is IAVSReservesManager, AccessControl {
     function _adjustEpochFlow() private {
         // check how many epochLengths have passed since lastEpochUpdateTime and update epoch accordingly
 
-        // todo: consider isntead of step functions, use a linear function to adjust token flow based on SF divergence
+        // todo: consider instead of step functions, use a linear function to adjust token flow based on SF divergence
         // from desired range with a max/min rate limit
 
         int256 _SF = safetyFactorOracle.getSafetyFactor(protocol);
