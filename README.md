@@ -20,7 +20,7 @@ directory.
 ```mermaid
 graph TD;
 AVS-.->|Leverage Eigenlayer security to do valuable work| AVSRewardToken;
-AVSRewardToken-->|Emmisions Schedule| Reserves;
+AVSRewardToken-->|Emissions Schedule| Reserves;
 Reserves-->|Rate-based Payout| EigenlayerPaymentsManager;
 EigenlayerPaymentsManager-->|Claimable Tokens|Operators;
 SafetyFactorOracle-.->|Adjustments to rate of payments|Reserves
